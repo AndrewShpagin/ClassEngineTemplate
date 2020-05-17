@@ -1,0 +1,267 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="Source Files">
+      <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
+      <Extensions>cpp;c;cc;cxx;c++;def;odl;idl;hpj;bat;asm;asmx</Extensions>
+    </Filter>
+    <Filter Include="Header Files">
+      <UniqueIdentifier>{93995380-89BD-4b04-88EB-625FBE52EBFB}</UniqueIdentifier>
+      <Extensions>h;hh;hpp;hxx;h++;hm;inl;inc;ipp;xsd</Extensions>
+    </Filter>
+    <Filter Include="Resource Files">
+      <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
+      <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
+    </Filter>
+    <Filter Include="ClassEngine">
+      <UniqueIdentifier>{1b2412b9-25f9-4886-a4b5-32005bb7e803}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="comms-math">
+      <UniqueIdentifier>{7a87bcc4-3860-43cc-a3c9-042e70d7cc9f}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="Template.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="comms-Math\cAngles.cpp">
+      <Filter>comms-math</Filter>
+    </ClCompile>
+    <ClCompile Include="comms-Math\cBounds.cpp">
+      <Filter>comms-math</Filter>
+    </ClCompile>
+    <ClCompile Include="comms-Math\cList.cpp">
+      <Filter>comms-math</Filter>
+    </ClCompile>
+    <ClCompile Include="comms-Math\cMat3.cpp">
+      <Filter>comms-math</Filter>
+    </ClCompile>
+    <ClCompile Include="comms-Math\cMat4.cpp">
+      <Filter>comms-math</Filter>
+    </ClCompile>
+    <ClCompile Include="comms-Math\cMath.cpp">
+      <Filter>comms-math</Filter>
+    </ClCompile>
+    <ClCompile Include="comms-Math\cPlane.cpp">
+      <Filter>comms-math</Filter>
+    </ClCompile>
+    <ClCompile Include="comms-Math\cPool.cpp">
+      <Filter>comms-math</Filter>
+    </ClCompile>
+    <ClCompile Include="comms-Math\cQuat.cpp">
+      <Filter>comms-math</Filter>
+    </ClCompile>
+    <ClCompile Include="comms-Math\cRect.cpp">
+      <Filter>comms-math</Filter>
+    </ClCompile>
+    <ClCompile Include="comms-Math\cRotation.cpp">
+      <Filter>comms-math</Filter>
+    </ClCompile>
+    <ClCompile Include="comms-Math\cSeg.cpp">
+      <Filter>comms-math</Filter>
+    </ClCompile>
+    <ClCompile Include="comms-Math\cSphere.cpp">
+      <Filter>comms-math</Filter>
+    </ClCompile>
+    <ClCompile Include="comms-Math\cStr.cpp">
+      <Filter>comms-math</Filter>
+    </ClCompile>
+    <ClCompile Include="comms-Math\cThread.cpp">
+      <Filter>comms-math</Filter>
+    </ClCompile>
+    <ClCompile Include="comms-Math\cVec.cpp">
+      <Filter>comms-math</Filter>
+    </ClCompile>
+    <ClCompile Include="comms-Math\cVec2.cpp">
+      <Filter>comms-math</Filter>
+    </ClCompile>
+    <ClCompile Include="comms-Math\cVec3.cpp">
+      <Filter>comms-math</Filter>
+    </ClCompile>
+    <ClCompile Include="comms-Math\cVec4.cpp">
+      <Filter>comms-math</Filter>
+    </ClCompile>
+    <ClCompile Include="comms-Math\dMat3.cpp">
+      <Filter>comms-math</Filter>
+    </ClCompile>
+    <ClCompile Include="comms-Math\dMat4.cpp">
+      <Filter>comms-math</Filter>
+    </ClCompile>
+    <ClCompile Include="comms-Math\dSeg.cpp">
+      <Filter>comms-math</Filter>
+    </ClCompile>
+    <ClCompile Include="comms-Math\dVec2.cpp">
+      <Filter>comms-math</Filter>
+    </ClCompile>
+    <ClCompile Include="comms-Math\dVec3.cpp">
+      <Filter>comms-math</Filter>
+    </ClCompile>
+    <ClCompile Include="comms-Math\dVec4.cpp">
+      <Filter>comms-math</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="comms-Math\cAngles.h">
+      <Filter>comms-math</Filter>
+    </ClInclude>
+    <ClInclude Include="comms-Math\cBounds.h">
+      <Filter>comms-math</Filter>
+    </ClInclude>
+    <ClInclude Include="comms-Math\cList.h">
+      <Filter>comms-math</Filter>
+    </ClInclude>
+    <ClInclude Include="comms-Math\cMat3.h">
+      <Filter>comms-math</Filter>
+    </ClInclude>
+    <ClInclude Include="comms-Math\cMat4.h">
+      <Filter>comms-math</Filter>
+    </ClInclude>
+    <ClInclude Include="comms-Math\cMath.h">
+      <Filter>comms-math</Filter>
+    </ClInclude>
+    <ClInclude Include="comms-Math\comms-Math.h">
+      <Filter>comms-math</Filter>
+    </ClInclude>
+    <ClInclude Include="comms-Math\cPlane.h">
+      <Filter>comms-math</Filter>
+    </ClInclude>
+    <ClInclude Include="comms-Math\cPool.h">
+      <Filter>comms-math</Filter>
+    </ClInclude>
+    <ClInclude Include="comms-Math\cQuat.h">
+      <Filter>comms-math</Filter>
+    </ClInclude>
+    <ClInclude Include="comms-Math\cRect.h">
+      <Filter>comms-math</Filter>
+    </ClInclude>
+    <ClInclude Include="comms-Math\cRotation.h">
+      <Filter>comms-math</Filter>
+    </ClInclude>
+    <ClInclude Include="comms-Math\cSeg.h">
+      <Filter>comms-math</Filter>
+    </ClInclude>
+    <ClInclude Include="comms-Math\cSphere.h">
+      <Filter>comms-math</Filter>
+    </ClInclude>
+    <ClInclude Include="comms-Math\cStr.h">
+      <Filter>comms-math</Filter>
+    </ClInclude>
+    <ClInclude Include="comms-Math\cThread.h">
+      <Filter>comms-math</Filter>
+    </ClInclude>
+    <ClInclude Include="comms-Math\cTypeDefs.h">
+      <Filter>comms-math</Filter>
+    </ClInclude>
+    <ClInclude Include="comms-Math\cVec.h">
+      <Filter>comms-math</Filter>
+    </ClInclude>
+    <ClInclude Include="comms-Math\cVec2.h">
+      <Filter>comms-math</Filter>
+    </ClInclude>
+    <ClInclude Include="comms-Math\cVec3.h">
+      <Filter>comms-math</Filter>
+    </ClInclude>
+    <ClInclude Include="comms-Math\cVec4.h">
+      <Filter>comms-math</Filter>
+    </ClInclude>
+    <ClInclude Include="comms-Math\dMat3.h">
+      <Filter>comms-math</Filter>
+    </ClInclude>
+    <ClInclude Include="comms-Math\dMat4.h">
+      <Filter>comms-math</Filter>
+    </ClInclude>
+    <ClInclude Include="comms-Math\dSeg.h">
+      <Filter>comms-math</Filter>
+    </ClInclude>
+    <ClInclude Include="comms-Math\dVec2.h">
+      <Filter>comms-math</Filter>
+    </ClInclude>
+    <ClInclude Include="comms-Math\dVec3.h">
+      <Filter>comms-math</Filter>
+    </ClInclude>
+    <ClInclude Include="comms-Math\dVec4.h">
+      <Filter>comms-math</Filter>
+    </ClInclude>
+    <ClInclude Include="ClassEngine\BaseClass.h">
+      <Filter>ClassEngine</Filter>
+    </ClInclude>
+    <ClInclude Include="ClassEngine\BaseClassIO.h">
+      <Filter>ClassEngine</Filter>
+    </ClInclude>
+    <ClInclude Include="ClassEngine\BaseClassIO.hpp">
+      <Filter>ClassEngine</Filter>
+    </ClInclude>
+    <ClInclude Include="ClassEngine\bigdynarray.h">
+      <Filter>ClassEngine</Filter>
+    </ClInclude>
+    <ClInclude Include="ClassEngine\BinStream.h">
+      <Filter>ClassEngine</Filter>
+    </ClInclude>
+    <ClInclude Include="ClassEngine\BinStreams.h">
+      <Filter>ClassEngine</Filter>
+    </ClInclude>
+    <ClInclude Include="ClassEngine\BinStreams.hpp">
+      <Filter>ClassEngine</Filter>
+    </ClInclude>
+    <ClInclude Include="ClassEngine\bitset.h">
+      <Filter>ClassEngine</Filter>
+    </ClInclude>
+    <ClInclude Include="ClassEngine\class_reg.h">
+      <Filter>ClassEngine</Filter>
+    </ClInclude>
+    <ClInclude Include="ClassEngine\classengine.h">
+      <Filter>ClassEngine</Filter>
+    </ClInclude>
+    <ClInclude Include="ClassEngine\ClassEngine.hpp">
+      <Filter>ClassEngine</Filter>
+    </ClInclude>
+    <ClInclude Include="ClassEngine\classlist.h">
+      <Filter>ClassEngine</Filter>
+    </ClInclude>
+    <ClInclude Include="ClassEngine\CompactArray.h">
+      <Filter>ClassEngine</Filter>
+    </ClInclude>
+    <ClInclude Include="ClassEngine\haser.h">
+      <Filter>ClassEngine</Filter>
+    </ClInclude>
+    <ClInclude Include="ClassEngine\iqueue.h">
+      <Filter>ClassEngine</Filter>
+    </ClInclude>
+    <ClInclude Include="ClassEngine\khash.hpp">
+      <Filter>ClassEngine</Filter>
+    </ClInclude>
+    <ClInclude Include="ClassEngine\limitedarray.h">
+      <Filter>ClassEngine</Filter>
+    </ClInclude>
+    <ClInclude Include="ClassEngine\pool.h">
+      <Filter>ClassEngine</Filter>
+    </ClInclude>
+    <ClInclude Include="ClassEngine\pool.hpp">
+      <Filter>ClassEngine</Filter>
+    </ClInclude>
+    <ClInclude Include="ClassEngine\Resfile.h">
+      <Filter>ClassEngine</Filter>
+    </ClInclude>
+    <ClInclude Include="ClassEngine\stackarray.h">
+      <Filter>ClassEngine</Filter>
+    </ClInclude>
+    <ClInclude Include="ClassEngine\StrHash.h">
+      <Filter>ClassEngine</Filter>
+    </ClInclude>
+    <ClInclude Include="ClassEngine\TagsList.h">
+      <Filter>ClassEngine</Filter>
+    </ClInclude>
+    <ClInclude Include="ClassEngine\TagsList.hpp">
+      <Filter>ClassEngine</Filter>
+    </ClInclude>
+    <ClInclude Include="ClassEngine\unihash.h">
+      <Filter>ClassEngine</Filter>
+    </ClInclude>
+    <ClInclude Include="ClassEngine\useful_macro.h">
+      <Filter>ClassEngine</Filter>
+    </ClInclude>
+    <ClInclude Include="ClassEngine\implementation.h">
+      <Filter>ClassEngine</Filter>
+    </ClInclude>
+  </ItemGroup>
+</Project>
