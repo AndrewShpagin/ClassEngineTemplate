@@ -1,14 +1,25 @@
 #include "comms-Math.h"
+#ifdef COMMS_TBB
+#include <tbb/spin_mutex.h>
+#endif // COMMS_TBB
 
 namespace comms {
 
+#ifdef COMMS_TBB
+	tbb::spin_mutex TBB_CPOOL_MUTEX;
+#endif
 
 // cPool::Alloc
 byte * cPool::Alloc(const int Size) {
     if(Size <= 0) {
         return NULL;
     }
-	cThread::LockMutex(cMutex::GetInstance()->cpool_m);
+#ifdef COMMS_TBB
+	tbb::spin_mutex::scoped_lock lk(TBB_CPOOL_MUTEX);
+#else
+	static cMutex* Mutex = cMutex::GetInstance();
+	Mutex->cpool_m.lock();
+#endif
     byte *r = NULL;
     cPool_Store *P = GetPoolBySize(Size);
     if(P != NULL) {
@@ -17,13 +28,20 @@ byte * cPool::Alloc(const int Size) {
     if(NULL == r) {
         r = new byte[Size];
     }
-	cThread::UnlockMutex(cMutex::GetInstance()->cpool_m);
+#ifndef COMMS_TBB
+	Mutex->cpool_m.unlock();
+#endif
     return r;
 }
 
 // cPool::Free
 void cPool::Free(byte *Ptr, const int Size) {
-	cThread::LockMutex(cMutex::GetInstance()->cpool_m);
+#ifdef COMMS_TBB
+	tbb::spin_mutex::scoped_lock lk(TBB_CPOOL_MUTEX);
+#else
+	static cMutex* Mutex = cMutex::GetInstance();
+	Mutex->cpool_m.lock();
+#endif
     cPool_Store *P = GetPoolBySize(Size);
     if(P != NULL) {
         P->Free(Ptr);
@@ -32,7 +50,9 @@ void cPool::Free(byte *Ptr, const int Size) {
     if(Ptr != NULL) {
         delete[] Ptr;
     }
-	cThread::UnlockMutex(cMutex::GetInstance()->cpool_m);
+#ifndef COMMS_TBB
+	Mutex->cpool_m.unlock();
+#endif
 }
 
 cPool_Store * COMMS_POOL[5] = { // 8, 16, 32, 64, 128

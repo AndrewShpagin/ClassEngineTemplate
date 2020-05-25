@@ -181,9 +181,15 @@ public:
     void Move( cList<TYPE, CONTAINER>& Dest );
     // @copy DynArray::Move()
     bool Move( int from, int to );
+	// @copy DynArray::CopyTo()
+	void CopyTo(cList<TYPE, CONTAINER>& Dest);
     void Set(cList<TYPE, CONTAINER> *Src);
 	void operator = (const cList<TYPE, CONTAINER> &Src);
 	void Swap(cList<TYPE, CONTAINER> *With);
+	template <class Reader>
+	void FromBS(Reader& BS, int count);
+	template <class Writer>
+	void ToBS(Writer& BS);
 
 	// Access operators
 	const TYPE & operator [] (const int Index) const;
@@ -528,6 +534,11 @@ inline bool cList<TYPE, CONTAINER>::Move( int from, int to ){
     return true;
 }
 
+template <class TYPE, class CONTAINER>
+void cList<TYPE, CONTAINER>::CopyTo(cList<TYPE, CONTAINER>& Dest) {
+	Dest = *this;
+}
+
 // cList<TYPE, CONTAINER>::Set : (cList<TYPE, CONTAINER> *)
 template<class TYPE, class CONTAINER>
 inline void cList<TYPE, CONTAINER>::Set(cList<TYPE, CONTAINER> *Src) {
@@ -548,6 +559,22 @@ inline void cList<TYPE, CONTAINER>::operator = (const cList<TYPE, CONTAINER> &Sr
 template<class TYPE, class CONTAINER>
 inline void cList<TYPE, CONTAINER>::Swap(cList<TYPE, CONTAINER> *With) {
 	cMath::Swap(m_Container, With->m_Container);
+}
+
+template <class TYPE, class CONTAINER>
+template <class Reader>
+void cList<TYPE, CONTAINER>::FromBS(Reader& BS, int count) {
+	Clear();
+	SetCount(count);	
+	if(Count()){
+		BS.Read(ToPtr(), Count() * sizeof(TYPE));
+	}
+}
+
+template <class TYPE, class CONTAINER>
+template <class Writer>
+void cList<TYPE, CONTAINER>::ToBS(Writer& BS) {
+	BS.Write(ToPtr(), Count() * sizeof(TYPE));
 }
 
 // cList<TYPE, CONTAINER>::operator [] const
@@ -1204,9 +1231,10 @@ inline void cList<TYPE, CONTAINER>::Fill(const TYPE &Value) {
 
 // cList<TYPE, CONTAINER>::SetCount : void (const int, const TYPE &)
 template<class TYPE, class CONTAINER>
-inline void cList<TYPE, CONTAINER>::SetCount(const int Count, const TYPE &Value) {
-	SetCount(Count);
-	Fill(Value);
+inline void cList<TYPE, CONTAINER>::SetCount(const int _Count, const TYPE &Value) {
+	int n0 = Count();
+	SetCount(_Count);
+	for (int i = n0; i < _Count; i++)SetAt(i, Value);
 }
 
 //-----------------------------------------------------------------------------

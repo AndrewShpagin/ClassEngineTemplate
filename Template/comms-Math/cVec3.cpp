@@ -142,9 +142,7 @@ bool cVec3::FixDegenerateNormal() {
 //-----------------------------------------------------------------------------
 const cVec3 cVec3::RandRange1() {
 	cVec3 r;
-	r.x = cMath::RandRange1();
-	r.y = cMath::RandRange1();
-	r.z = cMath::RandRange1();
+	r.SetRandRange1();
 	return r;
 } // cVec3::RandRange1
 

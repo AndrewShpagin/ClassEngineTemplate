@@ -54,7 +54,7 @@ typedef ptrdiff_t cPtrDiff;
 #endif // COMMS_WINDOWS
 
 #ifdef COMMS_MACOS
-#include <Carbon/Carbon.h>
+#include <float.h>
 #include <unistd.h>
 #include <math.h>
 #include <sys/sysctl.h>
@@ -113,7 +113,7 @@ class dMat4;
 #define cAssertM(Exp, Msg)	((void)0)
 #endif // COMMS_ASSERT
 
-#define COMMS_TBB
+//#define COMMS_TBB
 	
 #include "cMath.h"
 #include "cList.h"
@@ -148,3 +148,5 @@ inline void OutputDebugString(const char *Str) {
 #endif // !Windows
 
 } // comms
+
+template <class X> using cList = comms::cList<X>; // Alias for "3DCoat". Note: under macOS there is enum value "cList" in the system header.

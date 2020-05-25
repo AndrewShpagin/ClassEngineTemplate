@@ -165,7 +165,6 @@
     <ClCompile Include="comms-Math\cSeg.cpp" />
     <ClCompile Include="comms-Math\cSphere.cpp" />
     <ClCompile Include="comms-Math\cStr.cpp" />
-    <ClCompile Include="comms-Math\cThread.cpp" />
     <ClCompile Include="comms-Math\cVec.cpp" />
     <ClCompile Include="comms-Math\cVec2.cpp" />
     <ClCompile Include="comms-Math\cVec3.cpp" />
@@ -176,6 +175,7 @@
     <ClCompile Include="comms-Math\dVec2.cpp" />
     <ClCompile Include="comms-Math\dVec3.cpp" />
     <ClCompile Include="comms-Math\dVec4.cpp" />
+    <ClCompile Include="GeneralMesh.cpp" />
     <ClCompile Include="Template.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -196,6 +196,7 @@
     <ClInclude Include="ClassEngine\implementation.h" />
     <ClInclude Include="ClassEngine\iqueue.h" />
     <ClInclude Include="ClassEngine\khash.hpp" />
+    <ClInclude Include="ClassEngine\Layered.h" />
     <ClInclude Include="ClassEngine\limitedarray.h" />
     <ClInclude Include="ClassEngine\pool.h" />
     <ClInclude Include="ClassEngine\pool.hpp" />
@@ -204,6 +205,7 @@
     <ClInclude Include="ClassEngine\StrHash.h" />
     <ClInclude Include="ClassEngine\TagsList.h" />
     <ClInclude Include="ClassEngine\TagsList.hpp" />
+    <ClInclude Include="ClassEngine\types.h" />
     <ClInclude Include="ClassEngine\unihash.h" />
     <ClInclude Include="ClassEngine\useful_macro.h" />
     <ClInclude Include="comms-Math\cAngles.h" />
@@ -233,6 +235,7 @@
     <ClInclude Include="comms-Math\dVec2.h" />
     <ClInclude Include="comms-Math\dVec3.h" />
     <ClInclude Include="comms-Math\dVec4.h" />
+    <ClInclude Include="GeneralMesh.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

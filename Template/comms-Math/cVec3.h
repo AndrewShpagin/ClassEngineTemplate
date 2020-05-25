@@ -22,6 +22,7 @@ public:
 	void Copy(const float *Src);
 	void SetZero();
 	void SetOne();
+	void SetRandRange1();
 	void Set(const float S);
 	void Set(const float X, const float Y, const float Z);
 	void Set(const cVec2 &XY, const float Z);
@@ -115,6 +116,7 @@ public:
 
 	static const cVec3 Abs(const cVec3 &);
 	static float Angle(const cVec3 &, const cVec3 &);
+	static float Angle(const cVec3& p1, const cVec3& p2, const cVec3& p3, const cVec3& normal);
 	static float AreaSigned(const cVec3 &t0, const cVec3 &t1, const cVec3 &t2);
 	static const cVec3 BaryCentric(const cVec3 &t0, const cVec3 &t1, const cVec3 &t2, const float f, const float g);
 	static const cVec3 Clamp(const cVec3 &, const cVec3 &, const cVec3 &);
@@ -209,6 +211,13 @@ inline void cVec3::SetZero() {
 // cVec3::SetOne
 inline void cVec3::SetOne() {
 	x = y = z = 1.0f;
+}
+
+// cVec3::SetRandRange1
+inline void cVec3::SetRandRange1() {
+	x = cMath::RandRange1();
+	y = cMath::RandRange1();
+	z = cMath::RandRange1();
 }
 
 // cVec3::Set : void (const float)
@@ -400,7 +409,7 @@ inline float cVec3::Normalize() {
 inline float cVec3::Normalize2() {
 	const float l = x * x + y * y + z * z;
 	if(l > 0.0f) {
-		const float il = cMath::FastInvSqrt(l);
+		const float il = 1.0f / cMath::Sqrt(l);
 		x *= il;
 		y *= il;
 		z *= il;
@@ -460,6 +469,16 @@ inline float cVec3::Angle(const cVec3 &u, const cVec3 &v) {
 	const float D = cVec3::Dot(u, v);
 	float ll = u.Length() * v.Length();
 	return cMath::Deg(cMath::ACos(D / ll));
+}
+// cVec3::Angle
+inline float cVec3::Angle(const cVec3& p1, const cVec3& p2, const cVec3& p3, const cVec3& normal) {
+	cVec3 d1 = p1 - p2;
+	cVec3 d2 = p3 - p2;
+	d1 -= normal * normal.dot(d1);
+	d2 -= normal * normal.dot(d2);
+	float ang = cMath::Deg(atan2(normal.dot(Cross(d1, d2)), d1.dot(d2)));
+	while (ang < 0.0)ang += 360.0;
+	return ang;
 }
 
 // cVec3::AreaSigned

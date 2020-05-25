@@ -1,15 +1,54 @@
 #include "comms-Math.h"
 
 namespace comms {
+#include "../comms/cLog.h"
 
 namespace cThread {
 
 cList<ThreadHandle> DeadThreads;
 
 void AddDeadThread(ThreadHandle h){
-	cThread::LockMutex(cMutex::GetInstance()->dead_m);
+	static cMutex* Mutex = cMutex::GetInstance();
+	Mutex->dead_m.lock();
 	DeadThreads.Add(h);
-	cThread::UnlockMutex(cMutex::GetInstance()->dead_m);
+	Mutex->dead_m.unlock();
+	cLog::Message("AddDeadThread: %d", h);
+}
+void RemoveDeadThread(ThreadHandle h) {
+	static cMutex* Mutex = cMutex::GetInstance();
+	Mutex->dead_m.lock();
+	for (int k = 0; k < DeadThreads.Count(); k++) {
+		if (DeadThreads[k] == h) {
+			DeadThreads.RemoveAt(k, 1);
+			k--;
+		}
+	}
+	Mutex->dead_m.unlock();
+}
+void RemoveDeadThreads() {
+	static cMutex* Mutex = cMutex::GetInstance();
+	Mutex->dead_m.lock();
+	for (int i = DeadThreads.Count() - 1; i >= 0; i--) {
+#ifdef COMMS_WINDOWS
+		// The same as "WaitAndDeleteThread" without deadlock because
+		// "WaitAndDeleteThread" calls "RemoveDeadThread" which locks the same mutex
+		if (DeadThreads[i] != nullptr) {
+			WaitForSingleObject(DeadThreads[i], INFINITE);
+			CloseHandle(DeadThreads[i]);
+			DeadThreads[i] = nullptr;
+		}
+#endif // Windows
+#if defined COMMS_MACOS || defined COMMS_LINUX
+        if(DeadThreads[i] != 0) {
+            // The same as "WaitAndDeleteThread" without deadlock because
+            // "WaitAndDeleteThread" calls "RemoveDeadThread" which locks the same mutex
+            pthread_join(DeadThreads[i], nullptr);
+            DeadThreads[i] = 0;
+        }
+#endif // macOS, Linux
+	}
+	DeadThreads.Clear();
+	Mutex->dead_m.unlock();
 }
 
 #ifdef COMMS_WINDOWS
@@ -25,21 +64,9 @@ int CpuCount() {
 	return Cpus;
 }
 
-// Sleep
-void Sleep(const dword Milliseconds) {
-	::Sleep(Milliseconds);
-}
-
 // CreateThread
 ThreadHandle CreateThread(ThreadProc Proc, void *Param, const bool Critical, const int Index) {
-	{
-		cThread::LockMutex(cMutex::GetInstance()->dead_m);
-		for (int i = 0; i < DeadThreads.Count(); i++){
-			DeleteThread(&DeadThreads[i]);
-		}
-		DeadThreads.Clear();
-		cThread::UnlockMutex(cMutex::GetInstance()->dead_m);
-	}
+	RemoveDeadThreads();
 	ThreadHandle hThread = ::CreateThread(NULL, 0, (LPTHREAD_START_ROUTINE)Proc, Param, CREATE_SUSPENDED, NULL);
 	if(Critical) {
 		SetThreadPriority(hThread, THREAD_PRIORITY_TIME_CRITICAL);
@@ -47,12 +74,23 @@ ThreadHandle CreateThread(ThreadProc Proc, void *Param, const bool Critical, con
 	ResumeThread(hThread);
 	return hThread;
 }
-
+void SafeCloseHandle(HANDLE Thread) {
+	try {
+		CloseHandle(Thread);
+	}
+	catch (std::exception& e) {
+		cLog::Message("%s", e.what());
+	}
+	catch (...) {
+		cLog::Message("UNKNOWN exception");
+	}
+}
 // CancelAndDeleteThread
 void CancelAndDeleteThread(ThreadHandle *Thread) {
 #ifdef COMMS_WINDOWS
 	if(*Thread != NULL) {
 		TerminateThread(*Thread, 0);
+		RemoveDeadThread(*Thread);
 		CloseHandle(*Thread);
 		*Thread = NULL;
 	}
@@ -62,6 +100,7 @@ void CancelAndDeleteThread(ThreadHandle *Thread) {
 // DeleteThread
 void DeleteThread(ThreadHandle *Thread) {
 	if(*Thread != NULL) {
+		RemoveDeadThread(*Thread);
 		CloseHandle(*Thread);
 		*Thread = NULL;
 	}
@@ -71,29 +110,10 @@ void DeleteThread(ThreadHandle *Thread) {
 void WaitAndDeleteThread(ThreadHandle *Thread) {
 	if(*Thread != NULL) {
 		WaitForSingleObject(*Thread, INFINITE);
+		RemoveDeadThread(*Thread);
 		CloseHandle(*Thread);
 		*Thread = NULL;
 	}
-}
-
-// CreateMutex
-void CreateMutex(ThreadMutex &Mutex) {
-	Mutex = ::CreateMutex(NULL, FALSE, NULL);
-}
-
-// DeleteMutex
-void DeleteMutex(ThreadMutex &Mutex) {
-	CloseHandle(Mutex);
-}
-
-// LockMutex
-void LockMutex(ThreadMutex &Mutex) {
-	WaitForSingleObject(Mutex, INFINITE);	
-}
-
-// UnlockMutex
-void UnlockMutex(ThreadMutex &Mutex) {	
-	ReleaseMutex(Mutex);
 }
 
 #endif // COMMS_WINDOWS
@@ -119,13 +139,6 @@ int CpuCount() {
 	return Cpus;
 }
 
-// Sleep
-void Sleep(const dword Milliseconds) {
-#if !defined COMMS_IOS && !defined COMMS_TIZEN
-	usleep(1000 * Milliseconds);
-#endif // !COMMS_IOS && !COMMS_TIZEN
-}
-
 // CreateThread
 ThreadHandle CreateThread(ThreadProc Proc, void *Param, const bool Critical, const int Index) {
 	pthread_t th;
@@ -139,6 +152,7 @@ ThreadHandle CreateThread(ThreadProc Proc, void *Param, const bool Critical, con
 // CancelAndDeleteThread
 void CancelAndDeleteThread(ThreadHandle *Thread) {
 	if(*Thread != 0) {
+		RemoveDeadThread(*Thread);
 		pthread_cancel(*Thread);
 		pthread_detach(*Thread);
 		*Thread = 0;
@@ -148,6 +162,7 @@ void CancelAndDeleteThread(ThreadHandle *Thread) {
 // DeleteThread
 void DeleteThread(ThreadHandle *Thread) {
 	if(*Thread != 0) {
+		RemoveDeadThread(*Thread);
 		pthread_detach(*Thread); // Doesn't stop the thread. It just specifies the system to free resources of already finished thread OR
 		// to free resources in the future after the thread will be finished. It is valid to call "pthread_t th; pthread_create(&th, NULL, Proc, NULL); pthread_detach(th);".
 		*Thread = 0;
@@ -157,29 +172,10 @@ void DeleteThread(ThreadHandle *Thread) {
 // WaitAndDeleteThread
 void WaitAndDeleteThread(ThreadHandle *Thread) {
 	if(*Thread != 0) {
+		RemoveDeadThread(*Thread);
 		pthread_join(*Thread, NULL);
 		*Thread = 0;
 	}
-}
-
-// CreateMutex
-void CreateMutex(ThreadMutex &Mutex) {
-	pthread_mutex_init(&Mutex, NULL);
-}
-
-// ThreadMutex
-void DeleteMutex(ThreadMutex &Mutex) {
-	pthread_mutex_destroy(&Mutex);
-}
-
-// LockMutex
-void LockMutex(ThreadMutex &Mutex) {
-	pthread_mutex_lock(&Mutex);
-}
-
-// UnlockMutex
-void UnlockMutex(ThreadMutex &Mutex) {
-	pthread_mutex_unlock(&Mutex);
 }
 
 #endif // COMMS_MACOS || COMMS_LINUX || COMMS_IOS || COMMS_TIZEN

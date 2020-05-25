@@ -66,9 +66,6 @@
     <ClCompile Include="comms-Math\cStr.cpp">
       <Filter>comms-math</Filter>
     </ClCompile>
-    <ClCompile Include="comms-Math\cThread.cpp">
-      <Filter>comms-math</Filter>
-    </ClCompile>
     <ClCompile Include="comms-Math\cVec.cpp">
       <Filter>comms-math</Filter>
     </ClCompile>
@@ -98,6 +95,9 @@
     </ClCompile>
     <ClCompile Include="comms-Math\dVec4.cpp">
       <Filter>comms-math</Filter>
+    </ClCompile>
+    <ClCompile Include="GeneralMesh.cpp">
+      <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -262,6 +262,15 @@
     </ClInclude>
     <ClInclude Include="ClassEngine\implementation.h">
       <Filter>ClassEngine</Filter>
+    </ClInclude>
+    <ClInclude Include="GeneralMesh.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="ClassEngine\types.h">
+      <Filter>ClassEngine</Filter>
+    </ClInclude>
+    <ClInclude Include="ClassEngine\Layered.h">
+      <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

@@ -7,6 +7,7 @@
 #include <mutex>
 #include "comms-Math/comms-Math.h"
 #include "ClassEngine/classengine.h"
+#include "ClassEngine/types.h"
 
 class Tt:public BaseClass {
 public:

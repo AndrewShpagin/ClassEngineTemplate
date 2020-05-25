@@ -2,6 +2,10 @@
 #ifdef COMMS_TBB
 #include <tbb/spin_mutex.h>
 #endif // COMMS_TBB
+#ifdef COMMS_MACOS
+#define __OPENSCRIPTING__
+#include <Carbon/Carbon.h>
+#endif // macOS
 
 namespace comms {
 
